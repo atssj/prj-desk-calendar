@@ -1,10 +1,11 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const config: NextConfig = {
+  basePath: '/desk-calendar-app',
   output: 'export',
   images: {
     unoptimized: true,
   },
 };
 
-export default nextConfig;
+export default config;
