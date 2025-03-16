@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import CanvasZoomControls from "@/components/CanvasZoomControls";
 
 const InfiniteCanvas: React.FC = () => {
   // Ref for the HTMLCanvasElement
@@ -87,6 +88,7 @@ const InfiniteCanvas: React.FC = () => {
         onMouseLeave={handleMouseUp}
         onWheel={handleWheel}
       />
+      <CanvasZoomControls scale={scale} setScale={setScale} />
     </div>
   );
 };

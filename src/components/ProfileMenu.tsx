@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 const ProfileMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const email = "user@example.com"; // Replace with actual user email
+  const email = "user@example.com";
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block mt-2">
       <button
         title="Profile"
         onClick={() => setIsOpen(!isOpen)}
