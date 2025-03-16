@@ -34,7 +34,7 @@ jobs:
       - name: Display downloaded files
         run: ls -R dist/
       - name: Deploy to FTP server
-        uses: atssj/ftp-deploy:lastest
+        uses: atssj/gh-actions/actions/ftp-deploy@main
         with:
           ftp_server_name: ${{ secrets.FTP_SERVER_NAME_DCA }}
           ftp_server_username: ${{ secrets.FTP_SERVER_USERNAME_DCA }}
