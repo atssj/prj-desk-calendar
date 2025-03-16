@@ -1,9 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 
-// interface InfiniteCanvasProps {
-//   activeTool: "select" | "hand";
-// }
-
 const InfiniteCanvas: React.FC = () => {
   // Ref for the HTMLCanvasElement
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -54,10 +50,16 @@ const InfiniteCanvas: React.FC = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Update canvas dimensions to match the rendered size
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-
+    // Set canvas size to match the device pixel ratio for sharp rendering
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    
+    // Scale the context to account for the device pixel ratio
+    ctx.scale(dpr, dpr);
+    
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -66,22 +68,19 @@ const InfiniteCanvas: React.FC = () => {
     ctx.translate(offset.x, offset.y);
     ctx.scale(scale, scale);
     
-    // No grid drawing - leaving a clean canvas with the bg-gray-50 color from Tailwind
-    
     ctx.restore();
   }, [offset, scale]);
 
   const getCursorClass = (): string => {
     if (isPanning.current) return "cursor-grabbing";
-    // if (activeTool === "hand") return "cursor-grab";
-    return "cursor-default";
+    return "cursor-grab"; // Always show grab cursor like Excalidraw
   };
 
   return (
-    <div className="h-full">
+    <div className="absolute inset-0 overflow-hidden touch-none">
       <canvas
         ref={canvasRef}
-        className={`w-full h-full bg-gray-100 select-none ${getCursorClass()}`}
+        className={`w-full h-full bg-white select-none ${getCursorClass()}`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
