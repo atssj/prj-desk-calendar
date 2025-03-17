@@ -1,14 +1,15 @@
-name: Next.js CI
+name: prj-desk-calendar app ci
 
 on:
   push:
     branches: [main]
+    tags: ['*']
   pull_request:
     branches: [main]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -21,22 +22,24 @@ jobs:
           name: desk-calendar-app
           path: out/
           overwrite: true
+
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    env:
+      FTP_SERVER_PORT: 21
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: desk-calendar-app
           path: dist
-      - name: Display downloaded files
-        run: ls -R dist/
       - name: Deploy to FTP server
         uses: atssj/gh-actions/actions/ftp-deploy@main
         with:
           ftp_server_name: ${{ secrets.FTP_SERVER_NAME_DCA }}
           ftp_server_username: ${{ secrets.FTP_SERVER_USERNAME_DCA }}
           ftp_server_password: ${{ secrets.FTP_SERVER_PASSWORD_DCA }}
-          ftp_server_port: 21
+          ftp_server_port: ${{ env.FTP_SERVER_PORT }}
           input_dir: dist/
           remote_dir: desk-calendar-app/
