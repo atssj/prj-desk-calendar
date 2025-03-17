@@ -30,12 +30,10 @@ const InfiniteCanvas: React.FC = () => {
   const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>): void => {
     e.preventDefault();
     setScale(prev => {
-      const roundedPrev = Math.round(prev * 10) / 10;
-      if (e.deltaY < 0) {
-        return Math.min(5, roundedPrev + 0.1);
-      } else {
-        return Math.max(0.1, roundedPrev - 0.1);
-      }
+      const nextScale = e.deltaY < 0
+        ? Math.min(5, prev + 0.1)
+        : Math.max(0.1, prev - 0.1);
+      return Number(nextScale.toFixed(1));
     });
   };
 
