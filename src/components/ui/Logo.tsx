@@ -20,7 +20,7 @@ const Logo: React.FC<LogoProps> = ({ size = "md", className = "" }) => {
     <div className={`flex items-center gap-4 ${className}`}>
       <Link href="/">
         <Image
-          src="/logo.png"
+          src="logo.png"
           alt="Calendar Designer Logo"
           width={imageSize}
           height={imageSize}

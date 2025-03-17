@@ -9,11 +9,11 @@ interface CanvasZoomControlsProps {
 
 const CanvasZoomControls: React.FC<CanvasZoomControlsProps> = ({ scale, setScale }) => {
   const handleZoomIn = (): void => {
-    setScale(prev => Math.min(5, prev * 1.25));
+    setScale(prev => Math.min(5, (Math.floor(prev * 10) / 10) + 0.1));
   };
 
   const handleZoomOut = (): void => {
-    setScale(prev => Math.max(0.1, prev / 1.25));
+    setScale(prev => Math.max(0.1, (Math.round(prev * 10) / 10) - 0.1));
   };
 
   const handleReset = (): void => {
