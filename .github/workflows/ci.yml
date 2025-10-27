@@ -30,7 +30,7 @@ jobs:
     env:
       FTP_SERVER_PORT: 21
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: desk-calendar-app
           path: dist
